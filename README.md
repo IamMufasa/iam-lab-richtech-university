@@ -20,6 +20,15 @@ The lab simulates an enterprise-style IAM environment that integrates:
 - LDAP-based user authentication
 - Infrastructure as Code with Ansible
 
+---
+
+## 🖥️ Virtual Environment
+
+The project was built using **VMware Workstation** with 3–4 Ubuntu Server 22.04 VMs simulating an enterprise IAM environment.  
+Each VM hosts a specific IAM component (IdP, SP, LDAP, and Grouper) and all services are bridged on a virtual network.
+
+
+
 ## Project Structure
 ```bash
 iam-lab-shibboleth-grouper-duo/
