@@ -1,0 +1,27 @@
+---
+- name: Install and configure OpenLDAP
+  hosts: ldap
+  become: true
+
+  tasks:
+    - name: Install OpenLDAP packages
+      apt:
+        name:
+          - slapd
+          - ldap-utils
+        state: present
+        update_cache: yes
+
+    - name: Copy LDAP config
+      copy:
+        src: ../configs/ldap/slapd.ldif
+        dest: /tmp/slapd.ldif
+
+    - name: Apply LDAP config
+      command: ldapadd -Y EXTERNAL -H ldapi:/// -f /tmp/slapd.ldif
+      ignore_errors: yes
+
+    - name: Restart slapd
+      service:
+        name: slapd
+        state: restarted
