@@ -1,4 +1,3 @@
-# Walkthrough – RichTech University IAM Lab
 
 # RichTech University IAM Lab – Full Walkthrough
 
