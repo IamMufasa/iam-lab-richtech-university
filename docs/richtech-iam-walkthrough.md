@@ -1,24 +1,70 @@
 # Walkthrough – RichTech University IAM Lab
 
-This walkthrough guides you through the RichTech University IAM Lab, simulating a higher education environment with SSO, MFA, LDAP, and RBAC.
+# RichTech University IAM Lab – Full Walkthrough
 
-This project was built and tested using **VMware Workstation** with the following virtual machines:
+This project simulates an enterprise-level Identity & Access Management (IAM) environment for a fictional university (RichTech University), using open-source tools to demonstrate federated authentication, role-based access control (RBAC), directory integration, and MFA enforcement.
 
-- **VM 1 – Shibboleth Identity Provider**
-  - OS: Ubuntu Server 22.04 LTS
-  - Services: Shibboleth IdP, Duo MFA plugin
+---
 
-- **VM 2 – Shibboleth Service Provider**
-  - OS: Ubuntu Server 22.04 LTS
-  - Services: Apache HTTPD, Shibboleth SP
+## 🧭 Overview
 
-- **VM 3 – OpenLDAP Directory**
-  - OS: Ubuntu Server 22.04 LTS
-  - Services: slapd, LDAP user store
+This IAM lab includes:
+- Shibboleth SP and IdP (SAML 2.0)
+- OpenLDAP as the central identity store
+- Duo MFA plugin integrated at the IdP
+- Grouper for group-based access and RBAC
+- Attribute mapping, SAML assertion flow, and federated login simulation
 
-- **VM 4 – Grouper UI + MariaDB (RichTech IAM Lab only)**
-  - OS: Ubuntu Server 22.04 LTS
-  - Services: Grouper Access Manager, Database
+---
+
+## 🖥️ Virtual Lab Setup
+
+Built using **VMware Workstation** with the following virtual machines:
+
+| VM | OS | Purpose |
+|----|----|---------|
+| VM1 | Ubuntu Server 22.04 | Shibboleth IdP + Duo MFA plugin |
+| VM2 | Ubuntu Server 22.04 | Shibboleth SP (Apache HTTPD) |
+| VM3 | Ubuntu Server 22.04 | OpenLDAP Directory |
+| VM4 | Ubuntu Server 22.04 | Grouper UI + MariaDB |
+
+- All VMs are bridged on a shared virtual network
+- Self-signed SSL certificates used for HTTPS
+- Hostname mappings managed via local DNS or `/etc/hosts`
+
+---
+
+## 🧱 Architecture Diagram
+
+```text
+                           +------------------------+
+                           |  User (Web Browser)    |
+                           +-----------+------------+
+                                       |
+                          Access Request / Login Attempt
+                                       |
+                                       v
+          +----------------------------+----------------------------+
+          |      Shibboleth Service Provider (Apache HTTPD)         |
+          +----------------------------+----------------------------+
+                                       |
+                                SAML AuthnRequest
+                                       |
+                                       v
+   +-----------------------------+-----------------------------+
+   |     Shibboleth Identity Provider (IdP + Duo MFA Plugin)   |
+   +----------+----------------+------------------+------------+
+              |                                   |
+   Attribute Lookup                     Group Check / Entitlements
+              |                                   |
+              v                                   v
++----------------------------+         +-----------------------------+
+|     OpenLDAP Directory     |         |     Grouper Access Manager  |
+|     (Authentication)       |         |  (Group-based RBAC + DB)    |
++----------------------------+         +-----------------------------+
+                                                  ^
+                                     SAML Response / Assertion with Attributes
+
 
 - **Networking:**  
   All VMs are bridged on the same virtual network segment and communicate securely over HTTPS using self-signed SSL certificates.
