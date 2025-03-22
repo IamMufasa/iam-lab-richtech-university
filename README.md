@@ -36,7 +36,7 @@ iam-lab-shibboleth-grouper-duo/
 
 ## Architecture Diagram
 
-![IAM Architecture Diagram](docs/iam_architecture_diagram.png)
+![RichTech IAM Architecture](docs/richtech-iam-architecture.drawio.svg)
 
 ## Deployment
 See architecture and Ansible playbooks for step-by-step instructions.
