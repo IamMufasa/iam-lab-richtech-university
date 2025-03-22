@@ -40,6 +40,8 @@ iam-lab-shibboleth-grouper-duo/
 
 *Figure: RichTech University IAM flow showing user authentication via Shibboleth, Duo MFA, LDAP, and role-based access with Grouper.*
 
+➡️ Full walkthrough → [docs/richtech-iam-walkthrough.md](docs/richtech-iam-walkthrough.md)
+
 
 ## Deployment
 See architecture and Ansible playbooks for step-by-step instructions.
