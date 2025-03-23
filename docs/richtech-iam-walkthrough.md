@@ -96,9 +96,7 @@ All attributes are defined in `attribute-resolver.xml` and released via `attribu
 ldapadd -x -D "cn=admin,dc=example,dc=org" -W -f users.ldif
 
 
-- **Networking:**  
-  All VMs are bridged on the same virtual network segment and communicate securely over HTTPS using self-signed SSL certificates.
-
+---
 
 
 
