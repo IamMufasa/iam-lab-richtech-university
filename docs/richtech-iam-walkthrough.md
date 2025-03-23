@@ -37,6 +37,109 @@ Built using **VMware Workstation** with the following virtual machines:
 
 All VMs are bridged on the same virtual network segment and communicate securely over HTTPS using self-signed SSL certificates.
 
+---
+
+## 🔧 Setup Instructions
+
+### 1. Shibboleth IdP
+
+```bash
+sudo apt update
+sudo apt install openjdk-11-jdk unzip
+wget https://shibboleth.net/downloads/identity-provider/latest/shibboleth-identity-provider-4.x.x.tar.gz
+```
+
+- Edit `idp.properties` and `relying-party.xml`
+- Set `entityID`: `https://idp.richtechuniversity.org/idp/shibboleth`
+- Add Duo MFA plugin to login flow
+- Import SP metadata
+
+---
+
+### 2. Shibboleth SP
+
+```bash
+sudo apt install apache2 libapache2-mod-shib2
+```
+
+- Protect `/secure` path with Shibboleth config
+- Import IdP metadata
+- Configure virtual host with self-signed SSL
+
+---
+
+### 3. OpenLDAP
+
+```bash
+sudo apt install slapd ldap-utils
+sudo dpkg-reconfigure slapd
+```
+
+- Base DN: `dc=richtechuniversity,dc=org`
+- Import LDIF entries:
+```bash
+ldapadd -x -D "cn=admin,dc=richtechuniversity,dc=org" -W -f docs/users.ldif
+```
+
+---
+
+### 4. Grouper
+
+- Download and install Grouper using official installer
+- Connect to LDAP and MariaDB
+- Create groups: `students`, `faculty`, `it-admins`
+- Assign users to groups via Grouper UI
+
+---
+
+## 🔐 Attribute Mapping (IdP)
+
+| Attribute ID            | OID                                         | Description               |
+|-------------------------|----------------------------------------------|---------------------------|
+| `mail`                  | `urn:oid:0.9.2342.19200300.100.1.3`          | Email address             |
+| `givenName`             | `urn:oid:2.5.4.42`                           | First name                |
+| `sn`                    | `urn:oid:2.5.4.4`                            | Last name                 |
+| `eduPersonAffiliation`  | `urn:oid:1.3.6.1.4.1.5923.1.1.1.1`           | Role (e.g., student)      |
+
+---
+
+## 🧪 Testing
+
+### Tools
+
+- Chrome with SAML-Tracer extension
+- Shibboleth logs: `/opt/shibboleth-idp/logs/idp-process.log`
+- Apache logs: `/var/log/apache2/access.log`
+
+### Steps
+
+1. Visit `https://sp.richtechuniversity.org/secure`
+2. Redirects to IdP login
+3. Authenticate via LDAP + Duo MFA
+4. Successful SAML assertion returned
+5. Inspect response with SAML-Tracer
+
+---
+
+## 🛠️ Useful Project Commands
+
+```bash
+# Restart Shibboleth IdP
+sudo systemctl restart shibboleth-idp
+
+# Tail Shibboleth IdP logs
+tail -f /opt/shibboleth-idp/logs/idp-process.log
+
+# Search for user in OpenLDAP
+ldapsearch -x -LLL -b "dc=richtechuniversity,dc=org" "(uid=jdoe)" mail givenName sn
+```
+
+Access Grouper UI:
+```
+https://grouper.richtechuniversity.org/grouper/
+```
+
+---
 
 
 
