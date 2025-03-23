@@ -37,38 +37,8 @@ Built using **VMware Workstation** with the following virtual machines:
 
 All VMs are bridged on the same virtual network segment and communicate securely over HTTPS using self-signed SSL certificates.
 
----
 
-## 🧱 Architecture Diagram (ASCII)
 
-```text
-                           +------------------------+
-                           |  User (Web Browser)    |
-                           +-----------+------------+
-                                       |
-                          Access Request / Login Attempt
-                                       |
-                                       v
-          +----------------------------+----------------------------+
-          |      Shibboleth Service Provider (Apache HTTPD)         |
-          +----------------------------+----------------------------+
-                                       |
-                                SAML AuthnRequest
-                                       |
-                                       v
-   +-----------------------------+-----------------------------+
-   |     Shibboleth Identity Provider (IdP + Duo MFA Plugin)   |
-   +----------+----------------+------------------+------------+
-              |                                   |
-   Attribute Lookup                     Group Check / Entitlements
-              |                                   |
-              v                                   v
-+----------------------------+         +-----------------------------+
-|     OpenLDAP Directory     |         |     Grouper Access Manager  |
-|     (Authentication)       |         |  (Group-based RBAC + DB)    |
-+----------------------------+         +-----------------------------+
-                                                  ^
-                                     SAML Response / Assertion with Attributes
 
 
 ## 📚 Official Documentation
