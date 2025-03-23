@@ -1,6 +1,3 @@
-# RichTech University IAM Lab – Full Walkthrough
-
-This project simulates an enterprise-level Identity & Access Management (IAM) environment for a fictional university (RichTech University), using open-source tools to demonstrate federated authentication, role-based access control (RBAC), directory integration, and MFA enforcement.
 
 # RichTech University IAM Lab – Full Walkthrough
 
