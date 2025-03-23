@@ -87,8 +87,6 @@ All attributes are defined in `attribute-resolver.xml` and released via `attribu
 4. On success, redirected to protected content
 5. Use browser dev tools or logs to inspect SAML assertions
 
----
-
 ## 🛠️ Sample Commands
 
 **Import LDIF:**
@@ -100,7 +98,7 @@ ldapadd -x -D "cn=admin,dc=example,dc=org" -W -f users.ldif
   All VMs are bridged on the same virtual network segment and communicate securely over HTTPS using self-signed SSL certificates.
 
 
-© 2025 Richie — Built to showcase real-world IAM skills.
+
 
 ## 📚 Official Documentation
 
@@ -110,3 +108,6 @@ ldapadd -x -D "cn=admin,dc=example,dc=org" -W -f users.ldif
 - [Grouper Access Management](https://spaces.at.internet2.edu/display/Grouper/)
 - [Duo MFA for Shibboleth](https://duo.com/docs/shibboleth)
 - [VMware Workstation](https://www.vmware.com/products/workstation-pro.html)
+
+
+© 2025 Richie — Built to showcase real-world IAM skills.
