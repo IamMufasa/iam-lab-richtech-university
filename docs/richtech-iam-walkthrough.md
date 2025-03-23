@@ -87,6 +87,8 @@ All attributes are defined in `attribute-resolver.xml` and released via `attribu
 4. On success, redirected to protected content
 5. Use browser dev tools or logs to inspect SAML assertions
 
+---
+
 ## 🛠️ Sample Commands
 
 **Import LDIF:**
